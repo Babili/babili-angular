@@ -1,0 +1,26 @@
+{
+  "name": "babili-angular",
+  "version": "0.12.2",
+  "description": "Types and services to create an Angular Babili client",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Babili/babili-angular.git"
+  },
+  "dependencies": {
+    "@angular/common": "^6.0.1",
+    "@angular/core": "^6.0.1",
+    "@types/socket.io-client": "1.4.32",
+    "socket.io-client": "2.1.0",
+    "moment": "^2.19.3",
+    "rxjs": "^6.1.0"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "ts-node": "6.0.3",
+    "typescript": "2.7.2"
+  }
+}
