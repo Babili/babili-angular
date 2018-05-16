@@ -1,5 +1,5 @@
 {
-  "name": "babili-angular",
+  "name": "babili-angular-ts",
   "version": "0.12.2",
   "description": "Types and services to create an Angular Babili client",
   "main": "dist/index.js",

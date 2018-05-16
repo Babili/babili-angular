@@ -16,7 +16,7 @@ In your Angular root module:
 * provide an instance of `Babili.UrlConfiguration`  to configure your babili endpoints.
 
 ```typescript
-import { Babili } from "babili-angular";
+import { Babili } from "babili-angular-ts";
 
 @NgModule({
   declarations: [ 
@@ -64,7 +64,7 @@ export class SubModule {
 * Inject `Babili.MeService`:
 ```typescript
 import { Injectable } from "@angular/core";
-import { Babili } from "babili-angular";
+import { Babili } from "babili-angular-ts";
 
 @Injectable()
 export class AnyService {
