@@ -18,28 +18,25 @@ In your Angular root module:
 ```typescript
 import { Babili } from "babili-angular-ts";
 
+const configuration: Babili.UrlConfiguration = {
+  apiUrl: "https://api.your-babili-service.io:443",
+  socketUrl: "https://pusher.your-babili-service.io:443",
+  aliveIntervalInMs: 5000
+};
+
 @NgModule({
   declarations: [ 
     // ...
   ],
   imports: [
     // ...
-    Babili.BabiliModule.forRoot()
+    Babili.BabiliModule.forRoot(configuration)
     // ...
   ],
   entryComponents: [
     // ...
   ],
   providers: [
-    // ...
-    {
-      provide: Babili.URL_CONFIGURATION,
-      useValue: {
-        apiUrl: "https://api.your-babili-service.io:443",
-        socketUrl: "https://pusher.your-babili-service.io:443",
-        aliveIntervalInMs: 5000
-      }
-    },
     // ...
   ]
 })

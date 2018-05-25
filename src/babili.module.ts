@@ -1,8 +1,8 @@
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from "@angular/common/http";
-import { NgModule } from "@angular/core";
-import { ModuleWithProviders } from "@angular/core";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { ModuleWithProviders, NgModule } from "@angular/core";
 import { HttpAuthenticationInterceptor } from "./authentication/http-authentication-interceptor";
 import { TokenConfiguration } from "./configuration/token-configuration.types";
+import { URL_CONFIGURATION, UrlConfiguration } from "./configuration/url-configuration.types";
 import { MeRepository } from "./me/me.repository";
 import { MeService } from "./me/me.service";
 import { MessageRepository } from "./message/message.repository";
@@ -16,10 +16,14 @@ import { BootstrapSocket } from "./socket/bootstrap.socket";
   ]
  })
 export class BabiliModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(urlConfiguration: UrlConfiguration): ModuleWithProviders {
     return {
       ngModule: BabiliModule,
       providers: [
+        {
+          provide: URL_CONFIGURATION,
+          useValue: urlConfiguration
+        },
         SortRoomPipe,
         TokenConfiguration,
         BootstrapSocket,
