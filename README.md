@@ -7,7 +7,7 @@ This implementation works with RxJS 6+ and Angular 6+.
 
 ### Install (with npm)
 
-npm install --save @babili/angular
+npm install --save @babili.io/angular
 
 ### Enable Babili
 
@@ -16,7 +16,7 @@ In your Angular root module:
 * provide an instance of `Babili.UrlConfiguration`  to configure your babili endpoints.
 
 ```typescript
-import { Babili } from "@babili/angular";
+import { Babili } from "@babili.io/angular";
 
 const configuration: Babili.UrlConfiguration = {
   apiUrl: "https://api.your-babili-service.io:443",
@@ -61,7 +61,7 @@ export class SubModule {
 * Inject `Babili.MeService`:
 ```typescript
 import { Injectable } from "@angular/core";
-import { Babili } from "@babili/angular";
+import { Babili } from "@babili.io/angular";
 
 @Injectable()
 export class AnyService {

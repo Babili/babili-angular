@@ -1,5 +1,5 @@
 {
-  "name": "@babili/angular",
+  "name": "@babili.io/angular",
   "version": "0.13.0",
   "description": "Types and services to create an Angular Babili client",
   "scripts": {
