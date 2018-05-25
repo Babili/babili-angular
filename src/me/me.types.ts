@@ -1,3 +1,4 @@
+import * as momentLoaded from "moment";
 import { BehaviorSubject, Observable, of } from "rxjs";
 import { flatMap, map } from "rxjs/operators";
 import { ArrayUtils } from "../array.utils";
@@ -5,6 +6,7 @@ import { Room } from "../room/room.types";
 import { User } from "../user/user.types";
 import { Message } from "./../message/message.types";
 import { RoomRepository } from "./../room/room.repository";
+const moment = momentLoaded;
 
 export class Me {
 
@@ -116,7 +118,7 @@ export class Me {
 
   addRoom(newRoom: Room) {
     if (!this.hasRoom(newRoom)) {
-      if (!this.firstSeenRoom || this.firstSeenRoom.lastActivityAt.isAfter(newRoom.lastActivityAt)) {
+      if (!this.firstSeenRoom || moment(this.firstSeenRoom.lastActivityAt).isAfter(newRoom.lastActivityAt)) {
         this.firstSeenRoom = newRoom;
       }
 

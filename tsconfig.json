@@ -1,13 +1,26 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2016",
-    "declaration": true,
-    "outDir": "./dist",
+    "outDir": "./dist/out-tsc",
+    "baseUrl": "./src",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2016",
+      "dom"
+    ],
+    "paths": {
+      "@my/lib": [ "../dist/my-lib" ]
+    }
   },
-  "include": [
-    "src/**/*"
+  "exclude": [
+    ".ng_build"
   ]
 }

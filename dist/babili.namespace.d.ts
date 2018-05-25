@@ -1,4 +1,3 @@
-export { SortRoomPipe } from "./pipe/sort-room";
 export { BabiliModule } from "./babili.module";
 export { User } from "./user/user.types";
 export { Message } from "./message/message.types";

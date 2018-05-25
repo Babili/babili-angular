@@ -1,4 +1,3 @@
-import * as moment from "moment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { Message } from "../message/message.types";
 import { User } from "../user/user.types";
@@ -19,15 +18,15 @@ export declare class Room {
     private internalName;
     private internalLastActivityAt;
     private internalImageUrl;
-    constructor(id: string, name: string, lastActivityAt: moment.Moment, open: boolean, unreadMessageCount: number, users: User[], senders: User[], messages: Message[], initiator: User, roomRepository: RoomRepository);
+    constructor(id: string, name: string, lastActivityAt: Date, open: boolean, unreadMessageCount: number, users: User[], senders: User[], messages: Message[], initiator: User, roomRepository: RoomRepository);
     unreadMessageCount: number;
     readonly observableUnreadMessageCount: BehaviorSubject<number>;
     name: string;
     readonly observableName: BehaviorSubject<string>;
     open: boolean;
     readonly observableOpen: BehaviorSubject<boolean>;
-    lastActivityAt: moment.Moment;
-    readonly observableLastActivityAt: BehaviorSubject<moment.Moment>;
+    lastActivityAt: Date;
+    readonly observableLastActivityAt: BehaviorSubject<Date>;
     imageUrl: string;
     readonly observableImageUrl: BehaviorSubject<string>;
     openMembership(): Observable<Room>;

@@ -2,9 +2,6 @@
   "name": "@babili/angular",
   "version": "0.13.0",
   "description": "Types and services to create an Angular Babili client",
-  "scripts": {
-    "build": "rimraf dist && ng-packagr -p package.json"
-  },
   "repository": {
     "type": "git",
     "url": "git@github.com:Babili/babili-angular.git"
@@ -37,14 +34,17 @@
     "tslint": "~5.9.1",
     "typescript": "~2.7.2"
   },
-  "ngPackage": {
-    "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
-    "lib": {
-      "entryFile": "src/index.ts",
-      "externals": {
-        "moment": "moment"
-      }
-    },
-    "dest": "dist"
+  "main": "bundles/babili-angular.umd.js",
+  "module": "fesm5/babili-angular.js",
+  "es2015": "fesm2015/babili-angular.js",
+  "esm5": "esm5/babili-angular.js",
+  "esm2015": "esm2015/babili-angular.js",
+  "fesm5": "fesm5/babili-angular.js",
+  "fesm2015": "fesm2015/babili-angular.js",
+  "typings": "babili-angular.d.ts",
+  "metadata": "babili-angular.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
   }
 }

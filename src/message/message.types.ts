@@ -1,4 +1,6 @@
-import * as moment from "moment";
+import * as momentLoaded from "moment";
+const moment = momentLoaded;
+
 import { User } from "../user/user.types";
 
 export class Message {
@@ -8,7 +10,7 @@ export class Message {
     return new Message(json.id,
                         attributes.content,
                         attributes.contentType,
-                        moment.utc(attributes.createdAt),
+                        moment(attributes.createdAt).toDate(),
                         json.relationships.sender ? User.build(json.relationships.sender.data) : undefined,
                         json.relationships.room.data.id);
   }
@@ -24,7 +26,7 @@ export class Message {
   constructor(readonly id: string,
               readonly content: string,
               readonly contentType: string,
-              readonly createdAt: moment.Moment,
+              readonly createdAt: Date,
               readonly sender: User,
               readonly roomId: string) {}
 

@@ -13,6 +13,9 @@ import { BootstrapSocket } from "./socket/bootstrap.socket";
 @NgModule({
   imports: [
     HttpClientModule
+  ],
+  declarations: [
+    SortRoomPipe
   ]
  })
 export class BabiliModule {

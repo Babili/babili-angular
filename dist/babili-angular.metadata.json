@@ -1,0 +1,1 @@
+{"__symbolic":"module","version":4,"metadata":{"Babili":{"__symbolic":"error","message":"Unsupported bundled module reference","context":{"module":"./babili.namespace"}}},"origins":{"Babili":"./index"},"importAs":"@babili/angular"}

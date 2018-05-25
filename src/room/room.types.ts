@@ -1,4 +1,5 @@
-import * as moment from "moment";
+import * as momentLoaded from "moment";
+const moment = momentLoaded;
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { ArrayUtils } from "../array.utils";
@@ -17,7 +18,7 @@ export class Room {
     const initiator = json.relationships && json.relationships.initiator ? User.build(json.relationships.initiator.data) : undefined;
     return new Room(json.id,
                     attributes.name,
-                    attributes.lastActivityAt ? moment.utc(attributes.lastActivityAt) : undefined,
+                    attributes.lastActivityAt ? moment(attributes.lastActivityAt).utc().toDate() : undefined,
                     attributes.open,
                     attributes.unreadMessageCount,
                     users,
@@ -39,12 +40,12 @@ export class Room {
   private internalOpen: BehaviorSubject<boolean>;
   private internalUnreadMessageCount: BehaviorSubject<number>;
   private internalName: BehaviorSubject<string>;
-  private internalLastActivityAt: BehaviorSubject<moment.Moment>;
+  private internalLastActivityAt: BehaviorSubject<Date>;
   private internalImageUrl: BehaviorSubject<string>;
 
   constructor(readonly id: string,
               name: string,
-              lastActivityAt: moment.Moment,
+              lastActivityAt: Date,
               open: boolean,
               unreadMessageCount: number,
               readonly users: User[],
@@ -95,15 +96,15 @@ export class Room {
     return this.internalOpen;
   }
 
-  get lastActivityAt(): moment.Moment {
+  get lastActivityAt(): Date {
     return this.internalLastActivityAt.value;
   }
 
-  set lastActivityAt(lastActivityAt: moment.Moment) {
+  set lastActivityAt(lastActivityAt: Date) {
     this.internalLastActivityAt.next(lastActivityAt);
   }
 
-  get observableLastActivityAt(): BehaviorSubject<moment.Moment> {
+  get observableLastActivityAt(): BehaviorSubject<Date> {
     return this.internalLastActivityAt;
   }
 
