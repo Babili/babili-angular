@@ -1,6 +1,6 @@
 {
   "name": "@babili.io/angular",
-  "version": "0.13.2",
+  "version": "0.13.3",
   "description": "Types and services to create an Angular Babili client",
   "repository": {
     "type": "git",
