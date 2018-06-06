@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
-import { URL_CONFIGURATION, UrlConfiguration } from "../configuration/url-configuration.types";
+import { BabiliUrlConfiguration, URL_CONFIGURATION } from "../configuration/url-configuration.types";
 import { MessageRepository, NewMessage } from "../message/message.repository";
 import { User } from "../user/user.types";
 import { Message } from "./../message/message.types";
@@ -15,7 +15,7 @@ export class RoomRepository {
 
   constructor(private http: HttpClient,
               private messageRepository: MessageRepository,
-              @Inject(URL_CONFIGURATION) configuration: UrlConfiguration) {
+              @Inject(URL_CONFIGURATION) configuration: BabiliUrlConfiguration) {
     this.roomUrl = `${configuration.apiUrl}/user/rooms`;
   }
 

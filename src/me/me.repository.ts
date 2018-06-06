@@ -1,8 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
-import { empty, Observable } from "rxjs";
+import { Observable } from "rxjs";
+import { empty } from "rxjs";
 import { catchError, map } from "rxjs/operators";
-import { URL_CONFIGURATION, UrlConfiguration } from "../configuration/url-configuration.types";
+import { BabiliUrlConfiguration, URL_CONFIGURATION } from "../configuration/url-configuration.types";
 import { RoomRepository } from "./../room/room.repository";
 import { Me } from "./me.types";
 
@@ -14,7 +15,7 @@ export class MeRepository {
 
   constructor(private http: HttpClient,
               private roomRepository: RoomRepository,
-              @Inject(URL_CONFIGURATION) configuration: UrlConfiguration) {
+              @Inject(URL_CONFIGURATION) configuration: BabiliUrlConfiguration) {
     this.userUrl = `${configuration.apiUrl}/user`;
     this.aliveUrl = `${this.userUrl}/alive`;
   }

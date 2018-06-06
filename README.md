@@ -12,13 +12,13 @@ npm install --save @babili.io/angular
 ### Enable Babili
 
 In your Angular root module: 
-* import `Babili.BabiliModule.forRoot()`;
+* import `BabiliModule.forRoot()`;
 * provide an instance of `Babili.UrlConfiguration`  to configure your babili endpoints.
 
 ```typescript
 import { Babili } from "@babili.io/angular";
 
-const configuration: Babili.UrlConfiguration = {
+const configuration: BabiliUrlConfiguration = {
   apiUrl: "https://api.your-babili-service.io:443",
   socketUrl: "https://pusher.your-babili-service.io:443",
   aliveIntervalInMs: 5000
@@ -30,7 +30,7 @@ const configuration: Babili.UrlConfiguration = {
   ],
   imports: [
     // ...
-    Babili.BabiliModule.forRoot(configuration)
+    BabiliModule.forRoot(configuration)
     // ...
   ],
   entryComponents: [
@@ -43,7 +43,7 @@ const configuration: Babili.UrlConfiguration = {
 export class AppModule {}
 ```
 
-Then, you can inject babili services in every module that imports `Babili.BabiliModule`
+Then, you can inject babili services in every module that imports `BabiliModule`
 
 ```typescript
 @NgModule({
@@ -58,14 +58,14 @@ export class SubModule {
 
 ### Examples
 
-* Inject `Babili.MeService`:
+* Inject `MeService`:
 ```typescript
 import { Injectable } from "@angular/core";
 import { Babili } from "@babili.io/angular";
 
 @Injectable()
 export class AnyService {
-  constructor(private babiliMeService: Babili.MeService) {}
+  constructor(private babiliMeService: MeService) {}
 
   // ...
 }

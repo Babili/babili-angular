@@ -1,7 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
-import { Observable } from "rxjs";
 import * as io from "socket.io-client";
-import { URL_CONFIGURATION, UrlConfiguration } from "./../configuration/url-configuration.types";
+import { BabiliUrlConfiguration, URL_CONFIGURATION } from "./../configuration/url-configuration.types";
 
 
 
@@ -10,7 +9,7 @@ export class BootstrapSocket {
 
   private socket: SocketIOClient.Socket;
 
-  constructor(@Inject(URL_CONFIGURATION) private configuration: UrlConfiguration) {}
+  constructor(@Inject(URL_CONFIGURATION) private configuration: BabiliUrlConfiguration) {}
 
   connect(token: string): SocketIOClient.Socket {
     this.socket = io.connect(this.configuration.socketUrl, {

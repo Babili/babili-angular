@@ -1,11 +1,11 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { TokenConfiguration } from "./../configuration/token-configuration.types";
-import { UrlConfiguration } from "./../configuration/url-configuration.types";
+import { BabiliUrlConfiguration } from "./../configuration/url-configuration.types";
 export declare class HttpAuthenticationInterceptor implements HttpInterceptor {
     private urls;
     private tokenConfiguration;
-    constructor(urls: UrlConfiguration, tokenConfiguration: TokenConfiguration);
+    constructor(urls: BabiliUrlConfiguration, tokenConfiguration: TokenConfiguration);
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>;
     private addHeaderTo(request, token);
     private shouldAddHeaderTo(request);

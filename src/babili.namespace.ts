@@ -1,5 +1,5 @@
-export { SortRoomPipe } from "./pipe/sort-room";
 export { BabiliModule } from "./babili.module";
+export { SortRoomPipe } from "./pipe/sort-room";
 export { User } from "./user/user.types";
 export { Message } from "./message/message.types";
 export { Me } from "./me/me.types";
@@ -7,4 +7,9 @@ export { MeService } from "./me/me.service";
 export { HttpAuthenticationInterceptor } from "./authentication/http-authentication-interceptor";
 export { NotAuthorizedError } from "./authentication/not-authorized-error";
 export { Room } from "./room/room.types";
-export { URL_CONFIGURATION, UrlConfiguration } from "./configuration/url-configuration.types";
+export { URL_CONFIGURATION, BabiliUrlConfiguration } from "./configuration/url-configuration.types";
+export { TokenConfiguration } from "./configuration/token-configuration.types";
+export { MeRepository } from "./me/me.repository";
+export { MessageRepository } from "./message/message.repository";
+export { RoomRepository } from "./room/room.repository";
+export { BootstrapSocket } from "./socket/bootstrap.socket";

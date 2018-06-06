@@ -1,2 +1,1 @@
-import * as Babili from "./babili.namespace";
-export { Babili };
+export * from "./babili.namespace";

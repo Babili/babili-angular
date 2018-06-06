@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { UrlConfiguration } from "../configuration/url-configuration.types";
+import { BabiliUrlConfiguration } from "../configuration/url-configuration.types";
 import { MessageRepository, NewMessage } from "../message/message.repository";
 import { Message } from "./../message/message.types";
 import { Room } from "./room.types";
@@ -8,7 +8,7 @@ export declare class RoomRepository {
     private http;
     private messageRepository;
     private roomUrl;
-    constructor(http: HttpClient, messageRepository: MessageRepository, configuration: UrlConfiguration);
+    constructor(http: HttpClient, messageRepository: MessageRepository, configuration: BabiliUrlConfiguration);
     find(id: string): Observable<Room>;
     findAll(query: {
         [param: string]: string | string[];

@@ -3,13 +3,13 @@ import { Inject, Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { TokenConfiguration } from "./../configuration/token-configuration.types";
-import { URL_CONFIGURATION, UrlConfiguration } from "./../configuration/url-configuration.types";
+import { BabiliUrlConfiguration, URL_CONFIGURATION } from "./../configuration/url-configuration.types";
 import { NotAuthorizedError } from "./not-authorized-error";
 
 @Injectable()
 export class HttpAuthenticationInterceptor implements HttpInterceptor {
 
-  constructor(@Inject(URL_CONFIGURATION) private urls: UrlConfiguration,
+  constructor(@Inject(URL_CONFIGURATION) private urls: BabiliUrlConfiguration,
               private tokenConfiguration: TokenConfiguration) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
