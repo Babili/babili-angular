@@ -1,9 +1,9 @@
 /// <reference types="socket.io-client" />
-import { BabiliUrlConfiguration } from "./../configuration/url-configuration.types";
+import { BabiliConfiguration } from "../configuration/babili.configuration";
 export declare class BootstrapSocket {
     private configuration;
     private socket;
-    constructor(configuration: BabiliUrlConfiguration);
+    constructor(configuration: BabiliConfiguration);
     connect(token: string): SocketIOClient.Socket;
     socketExists(): boolean;
     disconnect(): void;

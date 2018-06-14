@@ -1,15 +1,13 @@
-import { Inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
+import { BabiliConfiguration } from "../configuration/babili.configuration";
 import * as io from "socket.io-client";
-import { BabiliUrlConfiguration, URL_CONFIGURATION } from "./../configuration/url-configuration.types";
-
-
 
 @Injectable()
 export class BootstrapSocket {
 
   private socket: SocketIOClient.Socket;
 
-  constructor(@Inject(URL_CONFIGURATION) private configuration: BabiliUrlConfiguration) {}
+  constructor(private configuration: BabiliConfiguration) {}
 
   connect(token: string): SocketIOClient.Socket {
     this.socket = io.connect(this.configuration.socketUrl, {

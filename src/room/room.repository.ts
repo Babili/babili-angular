@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http";
-import { Inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
+import { BabiliConfiguration } from "../configuration/babili.configuration";
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
-import { BabiliUrlConfiguration, URL_CONFIGURATION } from "../configuration/url-configuration.types";
 import { MessageRepository, NewMessage } from "../message/message.repository";
 import { User } from "../user/user.types";
 import { Message } from "./../message/message.types";
@@ -11,13 +11,9 @@ import { Room } from "./room.types";
 @Injectable()
 export class RoomRepository {
 
-  private roomUrl: string;
-
   constructor(private http: HttpClient,
               private messageRepository: MessageRepository,
-              @Inject(URL_CONFIGURATION) configuration: BabiliUrlConfiguration) {
-    this.roomUrl = `${configuration.apiUrl}/user/rooms`;
-  }
+              private configuration: BabiliConfiguration) {}
 
   find(id: string): Observable<Room> {
     return this.http.get(`${this.roomUrl}/${id}`)
@@ -136,5 +132,9 @@ export class RoomRepository {
 
   createMessage(room: Room, attributes: NewMessage): Observable<Message> {
     return this.messageRepository.create(room, attributes);
+  }
+
+  private get roomUrl(): string {
+    return `${this.configuration.apiUrl}/user/rooms`;
   }
 }

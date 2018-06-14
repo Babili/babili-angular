@@ -1,9 +1,10 @@
 {
   "name": "@babili.io/angular",
-  "version": "0.13.4",
+  "version": "0.13.5",
   "description": "Types and services to create an Angular Babili client",
   "scripts": {
-    "build": "rimraf dist && ng-packagr -p package.json"
+    "build": "rimraf dist && ng-packagr -p package.json",
+    "deploy": "npm publish dist"
   },
   "repository": {
     "type": "git",

@@ -1,8 +1,8 @@
-import { Inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
+import { BabiliConfiguration } from "../configuration/babili.configuration";
 import { Observable, timer } from "rxjs";
 import { map, publishReplay, refCount, share, takeWhile } from "rxjs/operators";
 import { TokenConfiguration } from "./../configuration/token-configuration.types";
-import { BabiliUrlConfiguration, URL_CONFIGURATION } from "./../configuration/url-configuration.types";
 import { Message } from "./../message/message.types";
 import { BootstrapSocket } from "./../socket/bootstrap.socket";
 import { MeRepository } from "./me.repository";
@@ -16,7 +16,7 @@ export class MeService {
 
   constructor(private meRepository: MeRepository,
               private socketClient: BootstrapSocket,
-              @Inject(URL_CONFIGURATION) private configuration: BabiliUrlConfiguration,
+              private configuration: BabiliConfiguration,
               private tokenConfiguration: TokenConfiguration) {
     this.alive = false;
   }

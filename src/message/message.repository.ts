@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http";
-import { Inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
+import { BabiliConfiguration } from "../configuration/babili.configuration";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { BabiliUrlConfiguration, URL_CONFIGURATION } from "../configuration/url-configuration.types";
 import { Room } from "../room/room.types";
 import { Message } from "./message.types";
 
@@ -15,12 +15,8 @@ export class NewMessage {
 @Injectable()
 export class MessageRepository {
 
-  private roomUrl: string;
-
   constructor(private http: HttpClient,
-              @Inject(URL_CONFIGURATION) configuration: BabiliUrlConfiguration) {
-    this.roomUrl = `${configuration.apiUrl}/user/rooms`;
-  }
+              private configuration: BabiliConfiguration) {}
 
   create(room: Room, attributes: NewMessage): Observable<Message> {
     return this.http.post(this.messageUrl(room.id), {
@@ -45,4 +41,7 @@ export class MessageRepository {
     return `${this.roomUrl}/${roomId}/messages`;
   }
 
+  private get roomUrl(): string {
+    return `${this.configuration.apiUrl}/user/rooms`;
+  }
 }

@@ -1,15 +1,15 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
-import { Inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
+import { BabiliConfiguration } from "../configuration/babili.configuration";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { TokenConfiguration } from "./../configuration/token-configuration.types";
-import { BabiliUrlConfiguration, URL_CONFIGURATION } from "./../configuration/url-configuration.types";
 import { NotAuthorizedError } from "./not-authorized-error";
 
 @Injectable()
 export class HttpAuthenticationInterceptor implements HttpInterceptor {
 
-  constructor(@Inject(URL_CONFIGURATION) private urls: BabiliUrlConfiguration,
+  constructor(private configuration: BabiliConfiguration,
               private tokenConfiguration: TokenConfiguration) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -34,6 +34,6 @@ export class HttpAuthenticationInterceptor implements HttpInterceptor {
   }
 
   private shouldAddHeaderTo(request: HttpRequest<any>): boolean {
-    return request.url.startsWith(this.urls.apiUrl);
+    return request.url.startsWith(this.configuration.apiUrl);
   }
 }

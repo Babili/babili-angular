@@ -1,14 +1,14 @@
 import { HttpClient } from "@angular/common/http";
+import { BabiliConfiguration } from "../configuration/babili.configuration";
 import { Observable } from "rxjs";
-import { BabiliUrlConfiguration } from "../configuration/url-configuration.types";
 import { MessageRepository, NewMessage } from "../message/message.repository";
 import { Message } from "./../message/message.types";
 import { Room } from "./room.types";
 export declare class RoomRepository {
     private http;
     private messageRepository;
-    private roomUrl;
-    constructor(http: HttpClient, messageRepository: MessageRepository, configuration: BabiliUrlConfiguration);
+    private configuration;
+    constructor(http: HttpClient, messageRepository: MessageRepository, configuration: BabiliConfiguration);
     find(id: string): Observable<Room>;
     findAll(query: {
         [param: string]: string | string[];
@@ -27,4 +27,5 @@ export declare class RoomRepository {
         [param: string]: string | string[];
     }): Observable<Message[]>;
     createMessage(room: Room, attributes: NewMessage): Observable<Message>;
+    private readonly roomUrl;
 }
