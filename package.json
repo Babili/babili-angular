@@ -1,6 +1,6 @@
 {
   "name": "@babili.io/angular",
-  "version": "0.13.3",
+  "version": "0.13.4",
   "description": "Types and services to create an Angular Babili client",
   "scripts": {
     "build": "rimraf dist && ng-packagr -p package.json"

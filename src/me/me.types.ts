@@ -1,7 +1,6 @@
 import * as momentLoaded from "moment";
 import { BehaviorSubject, Observable, of } from "rxjs";
 import { flatMap, map } from "rxjs/operators";
-import { ArrayUtils } from "../array.utils";
 import { Room } from "../room/room.types";
 import { User } from "../user/user.types";
 import { Message } from "./../message/message.types";
@@ -122,7 +121,7 @@ export class Me {
         this.firstSeenRoom = newRoom;
       }
 
-      const roomIndex = ArrayUtils.findIndex(this.rooms, room => room.id === newRoom.id);
+      const roomIndex = this.rooms ? this.rooms.findIndex(room => room.id === newRoom.id) : -1;
       if (roomIndex > -1) {
         this.rooms[roomIndex] = newRoom;
       } else {
@@ -132,7 +131,7 @@ export class Me {
   }
 
   findRoomById(roomId: string): Room {
-    return ArrayUtils.find(this.rooms, room => roomId === room.id);
+    return this.rooms ? this.rooms.find(room => roomId === room.id) : undefined;
   }
 
   openRoom(room: Room): Observable<Room> {
@@ -256,7 +255,7 @@ export class Me {
   }
 
   private findRoomOpened(roomToFind: Room): Room {
-    return ArrayUtils.find(this.openedRooms, room => roomToFind.id === room.id);
+    return this.openedRooms ? this.openedRooms.find(room => roomToFind.id === room.id) : undefined;
   }
 
   private addToOpenedRoom(room: Room) {
@@ -267,7 +266,7 @@ export class Me {
 
   private removeFromOpenedRoom(closedRoom: Room) {
     if (this.hasRoomOpened(closedRoom)) {
-      const roomIndex = ArrayUtils.findIndex(this.openedRooms, room => room.id === closedRoom.id);
+      const roomIndex = this.openedRooms ? this.openedRooms.findIndex(room => room.id === closedRoom.id) : undefined;
       this.openedRooms.splice(roomIndex, 1);
     }
   }

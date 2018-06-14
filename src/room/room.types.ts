@@ -1,12 +1,11 @@
 import * as momentLoaded from "moment";
-const moment = momentLoaded;
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { ArrayUtils } from "../array.utils";
 import { Message } from "../message/message.types";
 import { User } from "../user/user.types";
 import { MessageRepository, NewMessage } from "./../message/message.repository";
 import { RoomRepository } from "./room.repository";
+const moment = momentLoaded;
 
 export class Room {
 
@@ -146,7 +145,7 @@ export class Room {
 
 
   hasUser(userId: string): boolean {
-    return ArrayUtils.find(this.users.map(user => user.id), id => id === userId) !== undefined;
+    return this.users && this.users.some(user => user.id  === userId);
   }
 
   fetchMoreMessage(): Observable<Message[]> {
@@ -164,7 +163,7 @@ export class Room {
   }
 
   findMessageWithId(id: string): Message {
-    return ArrayUtils.find(this.messages, message => message.id === id);
+    return this.messages ? this.messages.find(message => message.id === id) : undefined;
   }
 
   update(): Observable<Room> {
@@ -183,7 +182,7 @@ export class Room {
   }
 
   removeMessage(messageToDelete: Message): Message {
-    const index = ArrayUtils.findIndex(this.messages, message => message.id === messageToDelete.id);
+    const index = this.messages ? this.messages.findIndex(message => message.id === messageToDelete.id) : -1;
     if (index > -1) {
       this.messages.splice(index, 1);
     }
