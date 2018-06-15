@@ -38,13 +38,13 @@ export class AppModule {}
 ```
 
 ```typescript
-import { BabiliConfiguration } from "@babili.io/angular";
+import { BabiliBootstraper } from "@babili.io/angular";
 
 
 @Component({})
 export class App {
 
-  constructor(babili: BabiliConfiguration) {
+  constructor(babili: BabiliBootstraper) {
     babili.init("https://api.your-babili-service.io:443", "https://pusher.your-babili-service.io:443", 5000);
   }
 }

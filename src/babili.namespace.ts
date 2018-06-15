@@ -13,4 +13,5 @@ export { RoomRepository } from "./room/room.repository";
 export { Room } from "./room/room.types";
 export { BootstrapSocket } from "./socket/bootstrap.socket";
 export { User } from "./user/user.types";
-export { BabiliConfiguration } from "./configuration/babili.configuration";
+export { BabiliBootstraper } from "./babili.bootstraper";
+export { UrlHelper } from "./helper/url.helper";

@@ -1,16 +1,16 @@
 import { Injectable } from "@angular/core";
-import { BabiliConfiguration } from "../configuration/babili.configuration";
 import * as io from "socket.io-client";
+import { UrlHelper } from "../helper/url.helper";
 
 @Injectable()
 export class BootstrapSocket {
 
   private socket: SocketIOClient.Socket;
 
-  constructor(private configuration: BabiliConfiguration) {}
+  constructor(private urlHelper: UrlHelper) {}
 
   connect(token: string): SocketIOClient.Socket {
-    this.socket = io.connect(this.configuration.socketUrl, {
+    this.socket = io.connect(this.urlHelper.socketUrl, {
       forceNew: true,
       query: `token=${token}`
     });

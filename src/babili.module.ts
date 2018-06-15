@@ -1,8 +1,9 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { ModuleWithProviders, NgModule } from "@angular/core";
-import { BabiliConfiguration } from "./configuration/babili.configuration";
 import { HttpAuthenticationInterceptor } from "./authentication/http-authentication-interceptor";
+import { BabiliBootstraper } from "./babili.bootstraper";
 import { TokenConfiguration } from "./configuration/token-configuration.types";
+import { UrlHelper } from "./helper/url.helper";
 import { MeRepository } from "./me/me.repository";
 import { MeService } from "./me/me.service";
 import { MessageRepository } from "./message/message.repository";
@@ -26,7 +27,8 @@ export class BabiliModule {
     return {
       ngModule: BabiliModule,
       providers: [
-        BabiliConfiguration,
+        UrlHelper,
+        BabiliBootstraper,
         SortRoomPipe,
         TokenConfiguration,
         BootstrapSocket,

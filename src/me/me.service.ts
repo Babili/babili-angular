@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { BabiliConfiguration } from "../configuration/babili.configuration";
 import { Observable, timer } from "rxjs";
 import { map, publishReplay, refCount, share, takeWhile } from "rxjs/operators";
+import { UrlHelper } from "../helper/url.helper";
 import { TokenConfiguration } from "./../configuration/token-configuration.types";
 import { Message } from "./../message/message.types";
 import { BootstrapSocket } from "./../socket/bootstrap.socket";
@@ -16,7 +16,7 @@ export class MeService {
 
   constructor(private meRepository: MeRepository,
               private socketClient: BootstrapSocket,
-              private configuration: BabiliConfiguration,
+              private urlHelper: UrlHelper,
               private tokenConfiguration: TokenConfiguration) {
     this.alive = false;
   }
@@ -49,7 +49,7 @@ export class MeService {
 
   private scheduleAliveness(me: Me): Me {
     this.alive = true;
-    timer(0, this.configuration.aliveIntervalInMs).pipe(
+    timer(0, this.urlHelper.aliveIntervalInMs).pipe(
       takeWhile(() => this.alive)
     )
     .subscribe(() => this.meRepository.updateAliveness(me));
