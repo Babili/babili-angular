@@ -1,7 +1,7 @@
 # Babili Angular
 
 Typescript implementation to use Babili in an Angular app.
-This implementation works with RxJS 6+ and Angular 6+.
+This implementation works with RxJS 6+ and Angular 7+.
 
 ## Usage
 
