@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.14.1 [2019-09-09]
+## 0.14.2 [2019-09-09]
 
 * More resillience when opening a room
 * Use `ng-packagr@5.5.0` to work with Node 12
