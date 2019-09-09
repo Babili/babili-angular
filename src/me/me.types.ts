@@ -255,7 +255,7 @@ export class Me {
   }
 
   private findRoomOpened(roomToFind: Room): Room {
-    return this.openedRooms ? this.openedRooms.find(room => roomToFind.id === room.id) : undefined;
+    return this.openedRooms !== undefined && this.openedRooms !== null && roomToFind !== null && roomToFind !== undefined ? this.openedRooms.find(room => roomToFind.id === room.id) : undefined;
   }
 
   private addToOpenedRoom(room: Room) {
