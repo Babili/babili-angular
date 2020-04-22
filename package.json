@@ -1,49 +1,51 @@
 {
   "name": "@babili.io/angular",
-  "version": "0.14.2",
+  "version": "1.0.0",
   "description": "Types and services to create an Angular Babili client",
   "scripts": {
     "build": "rimraf dist && ng-packagr -p package.json",
-    "deploy": "npm publish dist"
+    "deploy": "npm publish dist",
+    "pack": "npm run build && cd dist && npm pack && cd .. && echo '\n\n\"@babili.io/angular\": \"file:<path>/dist/babili.io-angular-<your-version>.tgz\"\n\n'"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:Babili/babili-angular.git"
   },
   "peerDependencies": {
-    "@angular/common": "^7.2.6",
-    "@angular/core": "^7.2.6",
-    "@types/socket.io-client": "1.4.32",
-    "socket.io-client": "2.2.0",
+    "@angular/common": "^9.0.0",
+    "@angular/core": "^9.0.0",
+    "socket.io-client": "^2.3.0",
+    "@types/socket.io-client": "^1.4.32",
     "moment": "^2.19.3",
     "rxjs": "^6.1.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.803.3",
-    "@angular-devkit/build-ng-packagr": "~0.803.3",
-    "@angular/common": "^7.2.6",
-    "@angular/compiler": "^7.2.6",
-    "@angular/compiler-cli": "^7.2.6",
-    "@angular/core": "^7.2.6",
+    "@angular-devkit/build-angular": "0.901.2",
+    "@angular-devkit/build-ng-packagr": "0.901.2",
+    "@angular/common": "9.1.2",
+    "@angular/compiler": "9.1.2",
+    "@angular/compiler-cli": "9.1.2",
+    "@angular/core": "9.1.2",
     "@types/socket.io-client": "1.4.32",
-    "codelyzer": "~4.2.1",
-    "moment": "^2.24.0",
-    "ng-packagr": "^5.5.0",
-    "rxjs": "^6.4.0",
-    "socket.io-client": "2.2.0",
-    "ts-node": "~8.3.0",
-    "tsickle": ">=0.37.0",
-    "tslib": "^1.10.0",
-    "tslint": "~5.19.0",
-    "typescript": "~3.1.6",
-    "fsevents": "^2.0.7"
+    "codelyzer": "5.2.2",
+    "moment": "2.24.0",
+    "ng-packagr": "9.1.1",
+    "rxjs": "6.5.5",
+    "socket.io-client": "2.3.0",
+    "ts-node": "8.9.0",
+    "tsickle": ">=0.38.1",
+    "tslib": "1.11.1",
+    "tslint": "6.1.1",
+    "typescript": "3.8.3",
+    "fsevents": "^2.1.2"
   },
   "ngPackage": {
     "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
     "lib": {
       "entryFile": "src/index.ts",
       "umdModuleIds": {
-        "moment": "moment"
+        "moment": "moment",
+        "socket.io-client": "socket.io-client"
       }
     },
     "dest": "dist"

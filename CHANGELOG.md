@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0 [2020-04-20]
+
+* Upgrade all dependencies
+* Minimal version of Angular required is 9
+* Use `ng-packagr@9.1.1`
+
 ## 0.14.2 [2019-09-09]
 
 * More resillience when opening a room
