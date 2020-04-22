@@ -1,6 +1,10 @@
 # Changelog
 
-## 1.0.0 [2020-04-20]
+## 1.0.1 [2020-04-22]
+
+* Add `isPersisted` on `Room`
+
+## 1.0.0 [2020-04-22]
 
 * Upgrade all dependencies
 * Minimal version of Angular required is 9

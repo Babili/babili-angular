@@ -206,4 +206,8 @@ export class Room {
       this.users.push(user);
     }
   }
+
+  isPersisted(): boolean {
+    return this.id !== null && this.id !== undefined;
+  }
 }
