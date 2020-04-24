@@ -10,7 +10,7 @@ export { MessageRepository } from "./message/message.repository";
 export { Message } from "./message/message.types";
 export { SortRoomPipe } from "./pipe/sort-room";
 export { RoomRepository } from "./room/room.repository";
-export { Room } from "./room/room.types";
+export { Room, sortRoomByLastActivityDesc } from "./room/room.types";
 export { BootstrapSocket } from "./socket/bootstrap.socket";
 export { User } from "./user/user.types";
 export { BabiliBootstraper } from "./babili.bootstraper";

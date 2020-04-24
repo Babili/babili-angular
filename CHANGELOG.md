@@ -2,7 +2,10 @@
 
 ## 1.0.2 [2020-04-24]
 
-* Make `User.markAllReceivedMessagesAsRead` public
+* Make 'User.markAllReceivedMessagesAsRead' public
+* Expose static 'sortedByLastActivityDesc' on Room
+* Make 'onMessageReceive' reactive
+* Add observable 'lastMessage' on Rooms
 
 ## 1.0.1 [2020-04-22]
 

@@ -17,12 +17,12 @@ export class RoomRepository {
 
   find(id: string): Observable<Room> {
     return this.http.get(`${this.roomUrl}/${id}`)
-                    .pipe(map((json: any) => Room.build(json.data, this, this.messageRepository)));
+                    .pipe(map((json: any) => Room.build(json.data, this)));
   }
 
   findAll(query: {[param: string]: string | string[] }): Observable<Room[]> {
     return this.http.get(this.roomUrl, { params: query })
-                    .pipe(map((json: any) => Room.map(json.data, this, this.messageRepository)));
+                    .pipe(map((json: any) => Room.map(json.data, this)));
   }
 
   findOpenedRooms(): Observable<Room[]> {
@@ -85,7 +85,7 @@ export class RoomRepository {
       params: {
         noDuplicate: `${withoutDuplicate}`
       }
-    }).pipe(map((response: any) => Room.build(response.data, this, this.messageRepository)));
+    }).pipe(map((response: any) => Room.build(response.data, this)));
   }
 
   update(room: Room): Observable<Room> {

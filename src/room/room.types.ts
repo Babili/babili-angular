@@ -1,15 +1,21 @@
 import * as momentLoaded from "moment";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Message } from "../message/message.types";
 import { User } from "../user/user.types";
-import { MessageRepository, NewMessage } from "./../message/message.repository";
+import { NewMessage } from "./../message/message.repository";
 import { RoomRepository } from "./room.repository";
 const moment = momentLoaded;
 
+export function sortRoomByLastActivityDesc(rooms: Room[]): Room[] {
+  return rooms.sort(function (room, otherRoom) {
+    return otherRoom.lastActivityAt.getTime() - room.lastActivityAt.getTime();
+  });
+}
+
 export class Room {
 
-  static build(json: any, roomRepository: RoomRepository, messageRepository: MessageRepository): Room {
+  static build(json: any, roomRepository: RoomRepository): Room {
     const attributes = json.attributes;
     const users = json.relationships && json.relationships.users ? User.map(json.relationships.users.data) : [];
     const senders = json.relationships && json.relationships.senders ? User.map(json.relationships.senders.data) : [];
@@ -27,19 +33,20 @@ export class Room {
                     roomRepository);
   }
 
-  static map(json: any, roomRepository: RoomRepository, messageRepository: MessageRepository): Room[] {
+  static map(json: any, roomRepository: RoomRepository): Room[] {
     if (json) {
-      return json.map(room => Room.build(room, roomRepository, messageRepository));
+      return json.map(room => Room.build(room, roomRepository));
     } else {
       return undefined;
     }
   }
 
-  newMessageNotifier: (message: Message) => any;
+  private internalOnMessageReceived: Subject<Message>;
   private internalOpen: BehaviorSubject<boolean>;
   private internalUnreadMessageCount: BehaviorSubject<number>;
   private internalName: BehaviorSubject<string>;
   private internalLastActivityAt: BehaviorSubject<Date>;
+  private internalLastMessage: BehaviorSubject<Message>;
   private internalImageUrl: BehaviorSubject<string>;
 
   constructor(readonly id: string,
@@ -54,9 +61,11 @@ export class Room {
               private roomRepository: RoomRepository) {
     this.internalOpen = new BehaviorSubject(open);
     this.internalLastActivityAt = new BehaviorSubject(lastActivityAt);
+    this.internalLastMessage = new BehaviorSubject(this.findLastMessage());
     this.internalName = new BehaviorSubject(name);
     this.internalUnreadMessageCount = new BehaviorSubject(unreadMessageCount);
     this.internalImageUrl = new BehaviorSubject(undefined);
+    this.internalOnMessageReceived = new Subject();
   }
 
   get unreadMessageCount(): number {
@@ -107,6 +116,18 @@ export class Room {
     return this.internalLastActivityAt;
   }
 
+  get lastMessage(): Message {
+    return this.internalLastMessage.value;
+  }
+
+  set lastMessage(message: Message) {
+    this.internalLastMessage.next(message);
+  }
+
+  get observableLastMessage(): BehaviorSubject<Message> {
+    return this.internalLastMessage;
+  }
+
   get imageUrl(): string {
     return this.internalImageUrl.value;
   }
@@ -119,6 +140,9 @@ export class Room {
     return this.internalImageUrl;
   }
 
+  get onMessageReceived(): Observable<Message> {
+    return this.internalOnMessageReceived;
+  }
 
   openMembership(): Observable<Room> {
     return this.roomRepository.updateMembership(this, true);
@@ -135,14 +159,12 @@ export class Room {
   addMessage(message: Message) {
     this.messages.push(message);
     this.lastActivityAt = message.createdAt;
+    this.lastMessage = message;
   }
 
   notifyNewMessage(message: Message) {
-    if (this.newMessageNotifier) {
-      this.newMessageNotifier.apply(message);
-    }
+    this.internalOnMessageReceived.next(message);
   }
-
 
   hasUser(userId: string): boolean {
     return this.users && this.users.some(user => user.id  === userId);
@@ -209,5 +231,13 @@ export class Room {
 
   isPersisted(): boolean {
     return this.id !== null && this.id !== undefined;
+  }
+
+  private findLastMessage(): Message {
+    if (this.messages.length > 0) {
+      return this.messages[this.messages.length - 1];
+    } else {
+      return undefined;
+    }
   }
 }
