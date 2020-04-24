@@ -271,7 +271,7 @@ export class Me {
     }
   }
 
-  private markAllReceivedMessagesAsRead(room: Room): Observable<Room> {
+  markAllReceivedMessagesAsRead(room: Room): Observable<Room> {
     return room.markAllMessagesAsRead()
                .pipe(map(readMessageCount => {
                   this.unreadMessageCount = Math.max(this.unreadMessageCount - readMessageCount, 0);

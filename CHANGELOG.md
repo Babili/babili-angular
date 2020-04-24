@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2 [2020-04-24]
+
+* Make `User.markAllReceivedMessagesAsRead` public
+
 ## 1.0.1 [2020-04-22]
 
 * Add `isPersisted` on `Room`

@@ -10,7 +10,7 @@ export class Message {
     return new Message(json.id,
                         attributes.content,
                         attributes.contentType,
-                        moment(attributes.createdAt).toDate(),
+                        attributes.createdAt ? moment(attributes.createdAt).toDate() : undefined,
                         json.relationships.sender ? User.build(json.relationships.sender.data) : undefined,
                         json.relationships.room.data.id);
   }
