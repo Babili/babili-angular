@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.0 [2021-08-04]
+
+* Minimal version of Angular required is `12`
+* Use `ng-packagr@12.2.0`
+* Minimal version of `socket.io-client` is `4.1.3`
+* Only compatible with `babili-pusher` image equal or greater than `babili/pusher:1.1.0`
+* Add observable `internalShortname` on `Room`
+
 ## 1.0.2 [2020-04-24]
 
 * Make 'User.markAllReceivedMessagesAsRead' public

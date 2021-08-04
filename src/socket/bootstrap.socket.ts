@@ -1,18 +1,21 @@
 import { Injectable } from "@angular/core";
-import * as io from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import { UrlHelper } from "../helper/url.helper";
 
 @Injectable()
 export class BootstrapSocket {
 
-  private socket: SocketIOClient.Socket;
+  private socket: Socket;
 
   constructor(private urlHelper: UrlHelper) {}
 
-  connect(token: string): SocketIOClient.Socket {
-    this.socket = io.connect(this.urlHelper.socketUrl, {
+  connect(token: string): Socket {
+    this.socket = io(this.urlHelper.socketUrl, {
       forceNew: true,
-      query: `token=${token}`
+      transports: ["websocket"], // babili-pusher does not support long HTTP polling
+      query: {
+        token: token
+      }
     });
     return this.socket;
   }

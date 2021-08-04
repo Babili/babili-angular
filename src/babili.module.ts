@@ -23,7 +23,7 @@ import { BootstrapSocket } from "./socket/bootstrap.socket";
   ]
  })
 export class BabiliModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<BabiliModule> {
     return {
       ngModule: BabiliModule,
       providers: [

@@ -48,6 +48,7 @@ export class Room {
   private internalLastActivityAt: BehaviorSubject<Date>;
   private internalLastMessage: BehaviorSubject<Message>;
   private internalImageUrl: BehaviorSubject<string>;
+  private internalShortname: BehaviorSubject<string>;
 
   constructor(readonly id: string,
               name: string,
@@ -65,6 +66,7 @@ export class Room {
     this.internalName = new BehaviorSubject(name);
     this.internalUnreadMessageCount = new BehaviorSubject(unreadMessageCount);
     this.internalImageUrl = new BehaviorSubject(undefined);
+    this.internalShortname = new BehaviorSubject(undefined);
     this.internalOnMessageReceived = new Subject();
   }
 
@@ -138,6 +140,14 @@ export class Room {
 
   get observableImageUrl(): BehaviorSubject<string> {
     return this.internalImageUrl;
+  }
+
+  set shortname(shortname: string) {
+    this.internalShortname.next(shortname);
+  }
+
+  get observableShortname(): BehaviorSubject<string> {
+    return this.internalShortname;
   }
 
   get onMessageReceived(): Observable<Message> {

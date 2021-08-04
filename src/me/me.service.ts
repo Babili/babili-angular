@@ -63,6 +63,12 @@ export class MeService {
   private connectSocket(me: Me): Me {
     if (!this.socketClient.socketExists()) {
       const socket = this.socketClient.connect(this.tokenConfiguration.apiToken);
+      // socket.onAny((eventName, ...args) => {
+      //   console.log("Event catched", eventName);
+      // });
+      socket.on("message", data => {
+        console.log("MESSAGE RECEIVED", data);
+      })
       socket.on("new message", data => this.receiveNewMessage(data));
       socket.on("connected", data => me.deviceSessionId = data.deviceSessionId);
     }
