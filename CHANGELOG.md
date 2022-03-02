@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.2 [2022-03-02]
+
+* Minimal version of Angular required is `13`
+* Use `ng-packagr@13.2.1`
+* Minimal version of `socket.io-client` is `4.4.1`
+
 ## 1.1.0 [2021-08-04]
 
 * Minimal version of Angular required is `12`
