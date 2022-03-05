@@ -1,11 +1,10 @@
-import * as momentLoaded from "moment";
+import moment from "moment";;
 import { BehaviorSubject, Observable, of } from "rxjs";
-import { flatMap, map } from "rxjs/operators";
+import { mergeMap, map } from "rxjs/operators";
 import { Room } from "../room/room.types";
 import { User } from "../user/user.types";
 import { Message } from "./../message/message.types";
 import { RoomRepository } from "./../room/room.repository";
-const moment = momentLoaded;
 
 export class Me {
 
@@ -137,7 +136,7 @@ export class Me {
   openRoom(room: Room): Observable<Room> {
     if (!this.hasRoomOpened(room)) {
       return room.openMembership()
-                 .pipe(flatMap((openedRoom: Room) => {
+                 .pipe(mergeMap((openedRoom: Room) => {
                    this.addToOpenedRoom(openedRoom);
                    return this.markAllReceivedMessagesAsRead(openedRoom);
                  }));
@@ -169,7 +168,7 @@ export class Me {
 
   openRoomAndCloseOthers(roomToOpen: Room): Observable<Room> {
     const roomsToBeClosed = this.openedRooms.filter(room => room.id !== roomToOpen.id);
-    return this.closeRooms(roomsToBeClosed).pipe(flatMap(rooms => this.openRoom(roomToOpen)));
+    return this.closeRooms(roomsToBeClosed).pipe(mergeMap(_rooms => this.openRoom(roomToOpen)));
   }
 
   hasOpenedRooms(): boolean {

@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import * as momentLoaded from "moment";
+import moment from "moment";;
 import { Room } from "../room/room.types";
-const moment = momentLoaded;
 
 @Pipe({
   name: "sortRooms"

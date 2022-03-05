@@ -1,5 +1,10 @@
 # Changelog
 
+
+## 1.1.3 [2022-03-05]
+
+* Enable `esModuleInterop`
+
 ## 1.1.2 [2022-03-02]
 
 * Minimal version of Angular required is `13`

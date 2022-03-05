@@ -1,5 +1,4 @@
-import * as momentLoaded from "moment";
-const moment = momentLoaded;
+import moment from "moment";
 
 import { User } from "../user/user.types";
 

@@ -1,11 +1,10 @@
-import * as momentLoaded from "moment";
+import moment from "moment";;
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Message } from "../message/message.types";
 import { User } from "../user/user.types";
 import { NewMessage } from "./../message/message.repository";
 import { RoomRepository } from "./room.repository";
-const moment = momentLoaded;
 
 export function sortRoomByLastActivityDesc(rooms: Room[]): Room[] {
   return rooms.sort(function (room, otherRoom) {
