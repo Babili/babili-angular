@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "dayjs";
 
 import { User } from "../user/user.types";
 
@@ -9,7 +9,7 @@ export class Message {
     return new Message(json.id,
                         attributes.content,
                         attributes.contentType,
-                        attributes.createdAt ? moment(attributes.createdAt).toDate() : undefined,
+                        attributes.createdAt ? dayjs(attributes.createdAt).toDate() : undefined,
                         json.relationships.sender ? User.build(json.relationships.sender.data) : undefined,
                         json.relationships.room.data.id);
   }

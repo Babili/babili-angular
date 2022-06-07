@@ -1,4 +1,4 @@
-import moment from "moment";;
+import dayjs from "dayjs";
 import { BehaviorSubject, Observable, of } from "rxjs";
 import { mergeMap, map } from "rxjs/operators";
 import { Room } from "../room/room.types";
@@ -116,7 +116,7 @@ export class Me {
 
   addRoom(newRoom: Room) {
     if (!this.hasRoom(newRoom)) {
-      if (!this.firstSeenRoom || moment(this.firstSeenRoom.lastActivityAt).isAfter(newRoom.lastActivityAt)) {
+      if (!this.firstSeenRoom || dayjs(this.firstSeenRoom.lastActivityAt).isAfter(newRoom.lastActivityAt)) {
         this.firstSeenRoom = newRoom;
       }
 

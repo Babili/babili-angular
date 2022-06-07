@@ -1,4 +1,4 @@
-import moment from "moment";;
+import dayjs from "dayjs";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Message } from "../message/message.types";
@@ -22,7 +22,7 @@ export class Room {
     const initiator = json.relationships && json.relationships.initiator ? User.build(json.relationships.initiator.data) : undefined;
     return new Room(json.id,
                     attributes.name,
-                    attributes.lastActivityAt ? moment(attributes.lastActivityAt).utc().toDate() : undefined,
+                    attributes.lastActivityAt ? dayjs(attributes.lastActivityAt).utc().toDate() : undefined,
                     attributes.open,
                     attributes.unreadMessageCount,
                     users,

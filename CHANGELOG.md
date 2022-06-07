@@ -1,9 +1,8 @@
 # Changelog
 
+## 1.1.4 [2022-03-05]
 
-## 1.1.3 [2022-03-05]
-
-* Enable `esModuleInterop`
+* Breaking change: Replace `moment` with `dayjs`
 
 ## 1.1.2 [2022-03-02]
 
