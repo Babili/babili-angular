@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Message } from "../message/message.types";
@@ -22,7 +21,7 @@ export class Room {
     const initiator = json.relationships && json.relationships.initiator ? User.build(json.relationships.initiator.data) : undefined;
     return new Room(json.id,
                     attributes.name,
-                    attributes.lastActivityAt ? dayjs(attributes.lastActivityAt).utc().toDate() : undefined,
+                    new Date(attributes.lastActivityAt),
                     attributes.open,
                     attributes.unreadMessageCount,
                     users,
@@ -36,7 +35,7 @@ export class Room {
     if (json) {
       return json.map(room => Room.build(room, roomRepository));
     } else {
-      return undefined;
+      return [];
     }
   }
 
@@ -57,15 +56,15 @@ export class Room {
               readonly users: User[],
               readonly senders: User[],
               readonly messages: Message[],
-              readonly initiator: User,
-              private roomRepository: RoomRepository) {
+              readonly initiator?: User,
+              private roomRepository?: RoomRepository) {
     this.internalOpen = new BehaviorSubject(open);
     this.internalLastActivityAt = new BehaviorSubject(lastActivityAt);
     this.internalLastMessage = new BehaviorSubject(this.findLastMessage());
     this.internalName = new BehaviorSubject(name);
     this.internalUnreadMessageCount = new BehaviorSubject(unreadMessageCount);
-    this.internalImageUrl = new BehaviorSubject(undefined);
-    this.internalShortname = new BehaviorSubject(undefined);
+    this.internalImageUrl = new BehaviorSubject("");
+    this.internalShortname = new BehaviorSubject("");
     this.internalOnMessageReceived = new Subject();
   }
 

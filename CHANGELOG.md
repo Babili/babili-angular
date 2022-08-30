@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.6 [2022-08-30]
+
+* Minimal version of Angular required is `14`
+* Use `ng-packagr@14.2.0`
+
+## 1.1.5 [2022-06-13]
+
+* Complete replacement of `dayjs`
 ## 1.1.4 [2022-03-05]
 
 * Breaking change: Replace `moment` with `dayjs`
