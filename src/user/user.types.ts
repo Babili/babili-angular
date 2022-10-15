@@ -1,5 +1,5 @@
 export class User {
-  static build(json: any): User {
+  static build(json: any): User | undefined {
     if (json) {
       return new User(json.id, json.attributes ? json.attributes.status : undefined);
     } else {
@@ -8,11 +8,7 @@ export class User {
   }
 
   static map(json: any): User[] {
-    if (json) {
-      return json.map(User.build);
-    } else {
-      return undefined;
-    }
+    return json?.map(User.build) || [];
   }
 
   constructor(readonly id: string,

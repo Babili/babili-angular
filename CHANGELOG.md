@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0 [2022-10-15]
+
+* Make every mutable value observable
+* Use `ng-packagr@14.2.1`
+
 ## 1.1.6 [2022-08-30]
 
 * Minimal version of Angular required is `14`

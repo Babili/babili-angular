@@ -33,8 +33,8 @@ export class RoomRepository {
     return this.findAll({ onlyClosed: "true" });
   }
 
-  findRoomsAfter(id: string): Observable<Room[]> {
-    return this.findAll({ firstSeenRoomId: id });
+  findRoomsAfter(id: string | undefined): Observable<Room[]> {
+    return this.findAll(id ? { firstSeenRoomId: id } : {});
   }
 
   findRoomsByIds(roomIds: string[]) {
@@ -117,7 +117,9 @@ export class RoomRepository {
       }
     }).pipe(map((response: any) => {
       const newUser = User.build(response.data.relationships.user.data);
-      room.addUser(newUser);
+      if (newUser) {
+        room.addUser(newUser);
+      }
       return room;
     }));
   }

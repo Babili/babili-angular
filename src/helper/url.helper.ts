@@ -17,7 +17,7 @@ export class UrlHelper {
   }
 
   isApi(url: string): boolean {
-    return url && url.startsWith(this.apiBasePath);
+    return url?.startsWith(this.apiBasePath) || false;
   }
 
   get aliveIntervalInMs(): number {

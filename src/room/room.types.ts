@@ -6,9 +6,13 @@ import { NewMessage } from "./../message/message.repository";
 import { RoomRepository } from "./room.repository";
 
 export function sortRoomByLastActivityDesc(rooms: Room[]): Room[] {
-  return rooms.sort(function (room, otherRoom) {
-    return otherRoom.lastActivityAt.getTime() - room.lastActivityAt.getTime();
-  });
+  if (rooms !== undefined && rooms !== null) {
+    return rooms.sort(function (room, otherRoom) {
+      return (otherRoom.lastActivityAt?.getTime() || 0) - (room.lastActivityAt?.getTime() || 0);
+    });
+  } else {
+    return [];
+  }
 }
 
 export class Room {
@@ -39,117 +43,137 @@ export class Room {
     }
   }
 
-  private internalOnMessageReceived: Subject<Message>;
-  private internalOpen: BehaviorSubject<boolean>;
-  private internalUnreadMessageCount: BehaviorSubject<number>;
-  private internalName: BehaviorSubject<string>;
-  private internalLastActivityAt: BehaviorSubject<Date>;
-  private internalLastMessage: BehaviorSubject<Message>;
-  private internalImageUrl: BehaviorSubject<string>;
-  private internalShortname: BehaviorSubject<string>;
+  private _onMessageReceived$: Subject<Message>;
+  private _open$: BehaviorSubject<boolean>;
+  private _unreadMessageCount$: BehaviorSubject<number>;
+  private _name$: BehaviorSubject<string>;
+  private _imageUrl$: BehaviorSubject<string>;
+  private _shortname$: BehaviorSubject<string>;
+  private _messages$: BehaviorSubject<Message[]>;
+  private _users$: BehaviorSubject<User[]>;
+  private _senders$: BehaviorSubject<User[]>;
+  private _lastActivityAt$: BehaviorSubject<Date | undefined>;
+  readonly lastMessage$: Observable<Message | undefined>;
+  readonly isPersisted: boolean;
 
-  constructor(readonly id: string,
+  constructor(readonly id: string | undefined,
               name: string,
-              lastActivityAt: Date,
+              lastActivityAt: Date | undefined,
               open: boolean,
               unreadMessageCount: number,
-              readonly users: User[],
-              readonly senders: User[],
-              readonly messages: Message[],
-              readonly initiator?: User,
-              private roomRepository?: RoomRepository) {
-    this.internalOpen = new BehaviorSubject(open);
-    this.internalLastActivityAt = new BehaviorSubject(lastActivityAt);
-    this.internalLastMessage = new BehaviorSubject(this.findLastMessage());
-    this.internalName = new BehaviorSubject(name);
-    this.internalUnreadMessageCount = new BehaviorSubject(unreadMessageCount);
-    this.internalImageUrl = new BehaviorSubject("");
-    this.internalShortname = new BehaviorSubject("");
-    this.internalOnMessageReceived = new Subject();
+              users: User[],
+              senders: User[],
+              messages: Message[],
+              readonly initiator: User | undefined,
+              private roomRepository: RoomRepository) {
+    this._open$ = new BehaviorSubject(open);
+    this._messages$ = new BehaviorSubject(messages);
+    this.lastMessage$ = this._messages$.pipe(map(list => list?.length > 0 ? list[list.length - 1] : undefined));
+    this._lastActivityAt$ = new BehaviorSubject<Date | undefined>(lastActivityAt || (messages?.length > 0 ? messages[messages.length - 1]?.createdAt : undefined));
+    this._name$ = new BehaviorSubject(name);
+    this._unreadMessageCount$ = new BehaviorSubject(unreadMessageCount);
+    this._users$ = new BehaviorSubject(users || []);
+    this._senders$ = new BehaviorSubject(senders || []);
+    this._imageUrl$ = new BehaviorSubject("");
+    this._shortname$ = new BehaviorSubject("");
+    this._onMessageReceived$ = new Subject();
+    this.isPersisted = this.id !== null && this.id !== undefined;
   }
 
   get unreadMessageCount(): number {
-    return this.internalUnreadMessageCount.value;
+    return this._unreadMessageCount$.value;
+  }
+
+  get unreadMessageCount$(): Observable<number> {
+    return this._unreadMessageCount$;
   }
 
   set unreadMessageCount(count: number) {
-    this.internalUnreadMessageCount.next(count);
-  }
-
-  get observableUnreadMessageCount(): BehaviorSubject<number> {
-    return this.internalUnreadMessageCount;
+    this._unreadMessageCount$.next(count);
   }
 
   get name(): string {
-    return this.internalName.value;
+    return this._name$.value;
+  }
+
+  get name$(): Observable<string> {
+    return this._name$;
   }
 
   set name(name: string) {
-    this.internalName.next(name);
+    this._name$.next(name);
   }
 
-  get observableName(): BehaviorSubject<string> {
-    return this.internalName;
+  get shortname(): string {
+    return this._shortname$.value;
   }
 
-  get open(): boolean {
-    return this.internalOpen.value;
-  }
-
-  set open(open: boolean) {
-    this.internalOpen.next(open);
-  }
-
-  get observableOpen(): BehaviorSubject<boolean> {
-    return this.internalOpen;
-  }
-
-  get lastActivityAt(): Date {
-    return this.internalLastActivityAt.value;
-  }
-
-  set lastActivityAt(lastActivityAt: Date) {
-    this.internalLastActivityAt.next(lastActivityAt);
-  }
-
-  get observableLastActivityAt(): BehaviorSubject<Date> {
-    return this.internalLastActivityAt;
-  }
-
-  get lastMessage(): Message {
-    return this.internalLastMessage.value;
-  }
-
-  set lastMessage(message: Message) {
-    this.internalLastMessage.next(message);
-  }
-
-  get observableLastMessage(): BehaviorSubject<Message> {
-    return this.internalLastMessage;
-  }
-
-  get imageUrl(): string {
-    return this.internalImageUrl.value;
-  }
-
-  set imageUrl(imageUrl: string) {
-    this.internalImageUrl.next(imageUrl);
-  }
-
-  get observableImageUrl(): BehaviorSubject<string> {
-    return this.internalImageUrl;
+  get shortname$(): Observable<string> {
+    return this._shortname$;
   }
 
   set shortname(shortname: string) {
-    this.internalShortname.next(shortname);
+    this._shortname$.next(shortname);
   }
 
-  get observableShortname(): BehaviorSubject<string> {
-    return this.internalShortname;
+  get open(): boolean {
+    return this._open$.value;
   }
 
-  get onMessageReceived(): Observable<Message> {
-    return this.internalOnMessageReceived;
+  get open$(): Observable<boolean> {
+    return this._open$;
+  }
+
+  set open(open: boolean) {
+    this._open$.next(open);
+  }
+
+  get messages(): Message[] {
+    return this._messages$.value;
+  }
+
+  get messages$(): Observable<Message[]> {
+    return this._messages$;
+  }
+
+  get lastActivityAt(): Date | undefined {
+    return this._lastActivityAt$.value;
+  }
+
+  get lastActivityAt$(): Observable<Date | undefined> {
+    return this._lastActivityAt$;
+  }
+
+  get imageUrl(): string {
+    return this._imageUrl$.value;
+  }
+
+  get imageUrl$(): Observable<string> {
+    return this._imageUrl$;
+  }
+
+  set imageUrl(imageUrl: string) {
+    this._imageUrl$.next(imageUrl);
+  }
+
+  get users(): User[] {
+    return this._users$.value;
+  }
+
+  get users$(): Observable<User[]> {
+    return this._users$;
+  }
+
+  get senders(): User[] {
+    return this._senders$.value;
+  }
+
+  get senders$(): Observable<User[]> {
+    return this._senders$;
+  }
+
+  get onMessageReceived$(): Observable<Message> {
+    return this.onMessageReceived$;
   }
 
   openMembership(): Observable<Room> {
@@ -165,35 +189,31 @@ export class Room {
   }
 
   addMessage(message: Message) {
-    this.messages.push(message);
-    this.lastActivityAt = message.createdAt;
-    this.lastMessage = message;
+    this._messages$.next([...this._messages$.value, message]);
   }
 
   notifyNewMessage(message: Message) {
-    this.internalOnMessageReceived.next(message);
+    this._onMessageReceived$.next(message);
   }
 
   hasUser(userId: string): boolean {
-    return this.users && this.users.some(user => user.id  === userId);
+    return this._users$.value.some(user => user.id  === userId);
   }
 
   fetchMoreMessage(): Observable<Message[]> {
-    const params = {
-      firstSeenMessageId: this.messages.length > 0 ? this.messages[0].id : undefined
-    };
+    const params = this._messages$.value.length > 0 ? { firstSeenMessageId: this._messages$.value[0].id } : {} as {[param: string]: string | string[]};
     return this.roomRepository
                .findMessages(this, params)
                .pipe(
       map(messages => {
-        this.messages.unshift.apply(this.messages, messages);
+        this._messages$.next([...this._messages$.value, ...messages]);
         return messages;
       })
     );
   }
 
-  findMessageWithId(id: string): Message {
-    return this.messages ? this.messages.find(message => message.id === id) : undefined;
+  findMessageWithId(id: string): Message | undefined {
+    return this._messages$.value?.find(message => message.id === id);
   }
 
   update(): Observable<Room> {
@@ -212,40 +232,29 @@ export class Room {
   }
 
   removeMessage(messageToDelete: Message): Message {
-    const index = this.messages ? this.messages.findIndex(message => message.id === messageToDelete.id) : -1;
+    const index = this._messages$.value?.findIndex(message => message.id === messageToDelete.id) || -1;
     if (index > -1) {
-      this.messages.splice(index, 1);
-    }
+      const messages = [...this._messages$.value];
+      messages.splice(index, 1);
+      this._messages$.next(messages);
+    } 
     return messageToDelete;
   }
 
-  delete(message: Message): Observable<Message> {
+  delete(message: Message): Observable<Message | undefined> {
     return this.roomRepository
                .deleteMessage(this, message)
                .pipe(map(deletedMessage => this.removeMessage(deletedMessage)));
   }
 
   replaceUsersWith(room: Room): Room {
-    this.users.splice(0, this.users.length);
-    Array.prototype.push.apply(this.users, room.users);
+    this._users$.next(room._users$.value);
     return this;
   }
 
   addUser(user: User) {
     if (!this.hasUser(user.id)) {
-      this.users.push(user);
-    }
-  }
-
-  isPersisted(): boolean {
-    return this.id !== null && this.id !== undefined;
-  }
-
-  private findLastMessage(): Message {
-    if (this.messages.length > 0) {
-      return this.messages[this.messages.length - 1];
-    } else {
-      return undefined;
+      this._users$.next([...this._users$.value, user]);
     }
   }
 }

@@ -11,43 +11,56 @@ export class Me {
   static build(json: any, roomRepository: RoomRepository): Me {
     const unreadMessageCount = json.data && json.data.meta ? json.data.meta.unreadMessageCount : 0;
     const roomCount = json.data && json.data.meta ? json.data.meta.roomCount : 0;
-    return new Me(json.data.id, [], [], unreadMessageCount, roomCount, roomRepository);
+    return new Me(json.data.id, [], [], unreadMessageCount, roomRepository);
   }
 
   public deviceSessionId: string;
-  private internalUnreadMessageCount: BehaviorSubject<number>;
-  private internalRoomCount: BehaviorSubject<number>;
   private firstSeenRoom: Room;
 
+  private _rooms$: BehaviorSubject<Room[]>;
+  readonly roomCount$: Observable<number>;
+  private _unreadMessageCount$: BehaviorSubject<number>;
+  private _openedRooms$: BehaviorSubject<Room[]>;
+  readonly openedRoomCount$: Observable<number>;
+
   constructor(readonly id: string,
-              readonly openedRooms: Room[],
-              readonly rooms: Room[],
+              openedRooms: Room[],
+              rooms: Room[],
               unreadMessageCount: number,
-              roomCount: number,
               private roomRepository: RoomRepository) {
-    this.internalUnreadMessageCount = new BehaviorSubject(unreadMessageCount || 0);
-    this.internalRoomCount = new BehaviorSubject(roomCount || 0);
+    this._rooms$ = new BehaviorSubject<Room[]>(rooms);
+    this.roomCount$ = this._rooms$.pipe(map(list => list?.length || 0));
+    this._openedRooms$ = new BehaviorSubject<Room[]>(openedRooms);
+    this.openedRoomCount$ = this._openedRooms$.pipe(map(list => list?.length || 0));
+    this._unreadMessageCount$ = new BehaviorSubject<number>(unreadMessageCount || 0);
   }
 
+  get rooms(): Room[] {
+    return this._rooms$.getValue();
+  }
+
+  get rooms$(): Observable<Room[]> {
+    return this._rooms$;
+  }
+
+  get openedRooms(): Room[] {
+    return this._openedRooms$.getValue();
+  }
+
+  get openedRooms$(): Observable<Room[]> {
+    return this._openedRooms$;
+  }
 
   get unreadMessageCount(): number {
-    return this.internalUnreadMessageCount.value;
+    return this._unreadMessageCount$.getValue();
+  }
+
+  get unreadMessageCount$(): Observable<number> {
+    return this.unreadMessageCount$;
   }
 
   set unreadMessageCount(count: number) {
-    this.internalUnreadMessageCount.next(count);
-  }
-
-  get observableUnreadMessageCount(): BehaviorSubject<number> {
-    return this.internalUnreadMessageCount;
-  }
-
-  get roomCount(): number {
-    return this.internalRoomCount.value;
-  }
-
-  get observableRoomCount(): BehaviorSubject<number> {
-    return this.internalRoomCount;
+    this._unreadMessageCount$.next(count);
   }
 
   fetchOpenedRooms(): Observable<Room[]> {
@@ -89,7 +102,7 @@ export class Me {
     }));
   }
 
-  findOrFetchRoomById(roomId: string): Observable<Room> {
+  findOrFetchRoomById(roomId: string): Observable<Room | undefined> {
     const room = this.findRoomById(roomId);
     if (roomId) {
       return of(room);
@@ -129,8 +142,8 @@ export class Me {
     }
   }
 
-  findRoomById(roomId: string): Room {
-    return this.rooms ? this.rooms.find(room => roomId === room.id) : undefined;
+  findRoomById(roomId: string): Room | undefined {
+    return this.rooms.find(room => roomId === room.id);
   }
 
   openRoom(room: Room): Observable<Room> {
@@ -191,7 +204,7 @@ export class Me {
     const noId = undefined;
     const initiator = this.toUser();
     return new Room(noId,
-      undefined,
+      "",
       undefined,
       true,
       noMessageUnread,
@@ -215,7 +228,7 @@ export class Me {
     return message && message.hasSenderId(this.id);
   }
 
-  deleteMessage(message: Message): Observable<Message> {
+  deleteMessage(message: Message): Observable<Message | undefined> {
     if (message) {
       const room = this.findRoomById(message.roomId);
       if (room) {
@@ -249,11 +262,11 @@ export class Me {
     return this.findRoomOpened(roomToFind) !== undefined;
   }
 
-  private findRoom(room: Room): Room {
-    return this.findRoomById(room.id);
+  private findRoom(room: Room): Room | undefined {
+    return room ? this.findRoomById(room.id!) : undefined;
   }
 
-  private findRoomOpened(roomToFind: Room): Room {
+  private findRoomOpened(roomToFind: Room): Room | undefined {
     return this.openedRooms !== undefined && this.openedRooms !== null && roomToFind !== null && roomToFind !== undefined ? this.openedRooms.find(room => roomToFind.id === room.id) : undefined;
   }
 
@@ -265,8 +278,10 @@ export class Me {
 
   private removeFromOpenedRoom(closedRoom: Room) {
     if (this.hasRoomOpened(closedRoom)) {
-      const roomIndex = this.openedRooms ? this.openedRooms.findIndex(room => room.id === closedRoom.id) : undefined;
-      this.openedRooms.splice(roomIndex, 1);
+      const roomIndex = this.openedRooms ? this.openedRooms.findIndex(room => room.id === closedRoom.id) : -1;
+      if (roomIndex > -1) {
+        this.openedRooms.splice(roomIndex, 1);
+      }
     }
   }
 
