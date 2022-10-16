@@ -6,7 +6,7 @@ import { Room, sortRoomByLastActivityDesc } from "../room/room.types";
   name: "sortRooms"
 })
 export class SortRoomPipe implements PipeTransform {
-  transform(rooms: Room[], _field: string): any[] {
+  transform(rooms: Room[], ..._arg): Room[] {
     return sortRoomByLastActivityDesc(rooms);
   }
 }

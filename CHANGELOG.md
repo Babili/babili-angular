@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2 [2022-10-16]
+
+* Bug - onReceivedMessage produces infinite loops
+
 ## 1.2.0 [2022-10-15]
 
 * Make every mutable value observable

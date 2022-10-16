@@ -173,7 +173,7 @@ export class Room {
   }
 
   get onMessageReceived$(): Observable<Message> {
-    return this.onMessageReceived$;
+    return this._onMessageReceived$;
   }
 
   openMembership(): Observable<Room> {
