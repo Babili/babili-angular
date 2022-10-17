@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rimraf dist && ng-packagr -p ng-package.json --config tsconfig.lib.json",
     "deploy": "cd dist && npm publish",
-    "pack": "npm run build && cd dist && npm pack && cd .. && echo '\n\n\"@babili.io/angular\": \"file:<path>/dist/babili.io-angular-<your-version>.tgz\"\n\n'"
+    "pack": "npm run build && cd dist && npm pack && cd .. && echo '\n\n\"@babili.io/angular\": \"file:<path>/dist/babili.io-angular-'\"${npm_package_version}\"'.tgz\"\n\n'"
   },
   "repository": {
     "type": "git",

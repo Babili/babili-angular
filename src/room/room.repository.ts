@@ -69,7 +69,7 @@ export class RoomRepository {
   }
 
   create(name: string, userIds: string[], withoutDuplicate: boolean): Observable<Room> {
-    return this.http.post(`${this.roomUrl}?noDuplicate=${withoutDuplicate}`, {
+    return this.http.post(`${this.roomUrl}`, {
       data: {
         type: "room",
         attributes: {
