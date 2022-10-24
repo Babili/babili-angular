@@ -1,5 +1,9 @@
 # Changelog
 
+
+## 1.2.3 [2022-10-24]
+
+* Bug - `Me.unreadMessageCount` observability does not work
 ## 1.2.2 [2022-10-16]
 
 * Bug - onReceivedMessage produces infinite loops

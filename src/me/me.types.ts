@@ -56,7 +56,7 @@ export class Me {
   }
 
   get unreadMessageCount$(): Observable<number> {
-    return this.unreadMessageCount$;
+    return this._unreadMessageCount$;
   }
 
   set unreadMessageCount(count: number) {
