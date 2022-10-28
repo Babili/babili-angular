@@ -84,48 +84,48 @@ export class Room {
     return this._unreadMessageCount$.value;
   }
 
-  get unreadMessageCount$(): Observable<number> {
-    return this._unreadMessageCount$;
-  }
-
   set unreadMessageCount(count: number) {
     this._unreadMessageCount$.next(count);
   }
 
+  get unreadMessageCount$(): Observable<number> {
+    return this._unreadMessageCount$;
+  }
+  
   get name(): string {
     return this._name$.value;
-  }
-
-  get name$(): Observable<string> {
-    return this._name$;
   }
 
   set name(name: string) {
     this._name$.next(name);
   }
 
-  get shortname(): string {
-    return this._shortname$.value;
+  get name$(): Observable<string> {
+    return this._name$;
   }
 
-  get shortname$(): Observable<string> {
-    return this._shortname$;
+  get shortname(): string {
+    return this._shortname$.value;
   }
 
   set shortname(shortname: string) {
     this._shortname$.next(shortname);
   }
 
+  get shortname$(): Observable<string> {
+    return this._shortname$;
+  }
+
   get open(): boolean {
     return this._open$.value;
   }
 
-  get open$(): Observable<boolean> {
-    return this._open$;
-  }
-
   set open(open: boolean) {
     this._open$.next(open);
+  }
+
+  get open$(): Observable<boolean> {
+    return this._open$;
   }
 
   get messages(): Message[] {
@@ -148,12 +148,12 @@ export class Room {
     return this._imageUrl$.value;
   }
 
-  get imageUrl$(): Observable<string> {
-    return this._imageUrl$;
-  }
-
   set imageUrl(imageUrl: string) {
     this._imageUrl$.next(imageUrl);
+  }
+
+  get imageUrl$(): Observable<string> {
+    return this._imageUrl$;
   }
 
   get users(): User[] {

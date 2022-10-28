@@ -17,9 +17,9 @@ export class HttpAuthenticationInterceptor implements HttpInterceptor {
       return next.handle(this.addHeaderTo(request, this.tokenConfiguration.apiToken))
                  .pipe(catchError(error => {
                    if (error instanceof HttpErrorResponse && error.status === 401) {
-                     return throwError(new NotAuthorizedError(error));
+                     return throwError(() => new NotAuthorizedError(error));
                    } else {
-                     return throwError(error);
+                     return throwError(() => error);
                    }
                  }));
     } else {

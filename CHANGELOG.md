@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.6 [2022-10-28]
+
+* Better management of RxJS pipes
+* Upgrade all dependencies
+* Enable ESLint
 
 ## 1.2.3 [2022-10-24]
 

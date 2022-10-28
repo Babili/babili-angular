@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, take } from "rxjs/operators";
 import { UrlHelper } from "../helper/url.helper";
 import { MessageRepository, NewMessage } from "../message/message.repository";
 import { User } from "../user/user.types";
@@ -17,12 +17,12 @@ export class RoomRepository {
 
   find(id: string): Observable<Room> {
     return this.http.get(`${this.roomUrl}/${id}`)
-                    .pipe(map((json: any) => Room.build(json.data, this)));
+                    .pipe(take(1), map((json: any) => Room.build(json.data, this)));
   }
 
   findAll(query: {[param: string]: string | string[] }): Observable<Room[]> {
     return this.http.get(this.roomUrl, { params: query })
-                    .pipe(map((json: any) => Room.map(json.data, this)));
+                    .pipe(take(1), map((json: any) => Room.map(json.data, this)));
   }
 
   findOpenedRooms(): Observable<Room[]> {

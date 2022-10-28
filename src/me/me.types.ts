@@ -10,7 +10,6 @@ export class Me {
 
   static build(json: any, roomRepository: RoomRepository): Me {
     const unreadMessageCount = json.data && json.data.meta ? json.data.meta.unreadMessageCount : 0;
-    const roomCount = json.data && json.data.meta ? json.data.meta.roomCount : 0;
     return new Me(json.data.id, [], [], unreadMessageCount, roomRepository);
   }
 
@@ -55,12 +54,12 @@ export class Me {
     return this._unreadMessageCount$.getValue();
   }
 
-  get unreadMessageCount$(): Observable<number> {
-    return this._unreadMessageCount$;
-  }
-
   set unreadMessageCount(count: number) {
     this._unreadMessageCount$.next(count);
+  }
+
+  get unreadMessageCount$(): Observable<number> {
+    return this._unreadMessageCount$;
   }
 
   fetchOpenedRooms(): Observable<Room[]> {
@@ -117,11 +116,9 @@ export class Me {
           if (room) {
             room.addMessage(newMessage);
             room.notifyNewMessage(newMessage);
-            if (!newMessage.hasSenderId(this.id)) {
+            if (!newMessage.hasSenderId(this.id) && !room.open) {
               this.unreadMessageCount = this.unreadMessageCount + 1;
-              if (!room.open) {
-                room.unreadMessageCount = room.unreadMessageCount + 1;
-              }
+              room.unreadMessageCount = room.unreadMessageCount + 1;
             }
           }
         });

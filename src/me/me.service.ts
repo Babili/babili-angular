@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable, timer } from "rxjs";
-import { map, publishReplay, refCount, share, takeWhile } from "rxjs/operators";
+import { map, shareReplay, take, takeWhile } from "rxjs/operators";
 import { UrlHelper } from "../helper/url.helper";
 import { TokenConfiguration } from "./../configuration/token-configuration.types";
 import { Message } from "./../message/message.types";
@@ -11,7 +11,7 @@ import { Me } from "./me.types";
 @Injectable()
 export class MeService {
 
-  private cachedMe: Observable<Me>;
+  private cachedMe: Observable<Me> | undefined;
   private alive: boolean;
 
   constructor(private meRepository: MeRepository,
@@ -28,14 +28,12 @@ export class MeService {
   }
 
   me(): Observable<Me> {
-    if (!this.hasCachedMe()) {
+    if (!this.cachedMe) {
       this.cachedMe = this.meRepository
                           .findMe()
                           .pipe(
                             map(me => this.scheduleAliveness(me)),
-                            publishReplay(1),
-                            refCount(),
-                            share()
+                            shareReplay(1)
                           );
     }
     return this.cachedMe.pipe(map(me => this.connectSocket(me)));
@@ -50,25 +48,18 @@ export class MeService {
   private scheduleAliveness(me: Me): Me {
     this.alive = true;
     timer(0, this.urlHelper.aliveIntervalInMs).pipe(
-      takeWhile(() => this.alive)
+      takeWhile(() => this.alive),
     )
-    .subscribe(() => this.meRepository.updateAliveness(me));
+    .subscribe(() => this.meRepository.updateAliveness().subscribe());
     return me;
-  }
-
-  private hasCachedMe(): boolean {
-    return this.cachedMe !== undefined;
   }
 
   private connectSocket(me: Me): Me {
     if (!this.socketClient.socketExists()) {
       const socket = this.socketClient.connect(this.tokenConfiguration.apiToken);
-      // socket.onAny((eventName, ...args) => {
-      //   console.log("Event catched", eventName);
-      // });
       socket.on("message", data => {
         console.log("MESSAGE RECEIVED", data);
-      })
+      });
       socket.on("new message", data => this.receiveNewMessage(data));
       socket.on("connected", data => me.deviceSessionId = data.deviceSessionId);
     }
@@ -77,6 +68,6 @@ export class MeService {
 
   private receiveNewMessage(json: any) {
     const message = Message.build(json.data);
-    this.me().subscribe(me => me.handleNewMessage(message));
+    this.me().pipe(take(1)).subscribe(me => me.handleNewMessage(message));
   }
 }

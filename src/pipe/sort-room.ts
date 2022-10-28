@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import dayjs from "dayjs";
 import { Room, sortRoomByLastActivityDesc } from "../room/room.types";
 
 @Pipe({
