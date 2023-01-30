@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0 [2023-01-30]
+
+* Support for Angular 15
+
 ## 1.2.6 [2022-10-28]
 
 * Better management of RxJS pipes
