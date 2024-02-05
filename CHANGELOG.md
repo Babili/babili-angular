@@ -1,5 +1,9 @@
 # Changelog
 
+## 17.0.0 [2024-02-05]
+
+* Support for Angular 17
+
 ## 16.0.0 [2023-05-07]
 
 * Support for Angular 16
