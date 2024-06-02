@@ -1,5 +1,9 @@
 # Changelog
 
+## 18.0.0 [2024-06-03]
+
+* Support for Angular 18
+
 ## 17.0.0 [2024-02-05]
 
 * Support for Angular 17
