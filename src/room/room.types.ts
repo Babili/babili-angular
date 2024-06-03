@@ -7,7 +7,7 @@ import { RoomRepository } from "./room.repository";
 
 export function sortRoomByLastActivityDesc(rooms: Room[]): Room[] {
   if (rooms !== undefined && rooms !== null) {
-    return rooms.sort(function (room, otherRoom) {
+    return rooms.sort((room, otherRoom) => {
       return (otherRoom.lastActivityAt?.getTime() || 0) - (room.lastActivityAt?.getTime() || 0);
     });
   } else {

@@ -1,4 +1,4 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { ModuleWithProviders, NgModule } from "@angular/core";
 import { HttpAuthenticationInterceptor } from "./authentication/http-authentication-interceptor";
 import { BabiliBootstraper } from "./babili.bootstraper";
@@ -12,9 +12,6 @@ import { RoomRepository } from "./room/room.repository";
 import { BootstrapSocket } from "./socket/bootstrap.socket";
 
 @NgModule({
-  imports: [
-    HttpClientModule
-  ],
   declarations: [
     SortRoomPipe
   ],
@@ -27,6 +24,7 @@ export class BabiliModule {
     return {
       ngModule: BabiliModule,
       providers: [
+        provideHttpClient(withInterceptorsFromDi()),
         UrlHelper,
         BabiliBootstraper,
         SortRoomPipe,
