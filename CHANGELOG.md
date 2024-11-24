@@ -1,5 +1,9 @@
 # Changelog
 
+## 19.0.0 [2024-11-24]
+
+* Support for Angular 19
+
 ## 18.0.1 [2024-06-03]
 
 * Support for Angular 18
