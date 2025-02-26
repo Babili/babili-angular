@@ -12,7 +12,7 @@ import { RoomRepository } from "./room/room.repository";
 import { BootstrapSocket } from "./socket/bootstrap.socket";
 
 @NgModule({
-  declarations: [
+  imports: [
     SortRoomPipe
   ],
   exports: [

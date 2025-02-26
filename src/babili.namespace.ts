@@ -2,7 +2,7 @@ export { HttpAuthenticationInterceptor } from "./authentication/http-authenticat
 export { NotAuthorizedError } from "./authentication/not-authorized-error";
 export { BabiliModule } from "./babili.module";
 export { TokenConfiguration } from "./configuration/token-configuration.types";
-export { BabiliUrlConfiguration } from "./configuration/url-configuration.types";
+export type { BabiliUrlConfiguration } from "./configuration/url-configuration.types";
 export { MeRepository } from "./me/me.repository";
 export { MeService } from "./me/me.service";
 export { Me } from "./me/me.types";

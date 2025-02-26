@@ -130,12 +130,13 @@ export class Me {
         this.firstSeenRoom = newRoom;
       }
 
-      const roomIndex = this.rooms ? this.rooms.findIndex(room => room.id === newRoom.id) : -1;
+      const roomIndex = this._rooms$.value ? this.rooms.findIndex(room => room.id === newRoom.id) : -1;
       if (roomIndex > -1) {
         this.rooms[roomIndex] = newRoom;
       } else {
         this.rooms.push(newRoom);
       }
+      this._rooms$.next([...this.rooms]);
     }
   }
 

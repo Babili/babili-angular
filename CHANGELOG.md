@@ -1,5 +1,9 @@
 # Changelog
 
+## 19.0.2 [2025-02-26]
+
+* Better support for Angular 19
+
 ## 19.0.0 [2024-11-24]
 
 * Support for Angular 19

@@ -26,7 +26,9 @@ export default [{
 }, ...compat.extends(
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@angular-eslint/recommended",
+    "plugin:@angular-eslint/template/process-inline-templates",
 ), {
     plugins: {
         "@typescript-eslint": typescriptEslint,
@@ -41,6 +43,7 @@ export default [{
         semi: ["error"],
         "prefer-arrow-callback": ["error"],
         "no-inferrable-types": "off",
+        "@angular-eslint/prefer-standalone": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-inferrable-types": "off",
 

@@ -2,8 +2,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 import { Room, sortRoomByLastActivityDesc } from "../room/room.types";
 
 @Pipe({
-  name: "sortRooms",
-  standalone: false
+  name: "sortRooms"
 })
 export class SortRoomPipe implements PipeTransform {
   transform(rooms: Room[], ..._arg): Room[] {
