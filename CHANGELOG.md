@@ -1,5 +1,9 @@
 # Changelog
 
+## 19.0.3 [2025-06-02]
+
+* Vulnerability: Use Socket's `auth` to transfer the initial token instead of the query parameters during the handshake step.
+
 ## 19.0.2 [2025-02-26]
 
 * Better support for Angular 19

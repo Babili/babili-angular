@@ -13,7 +13,7 @@ export class BootstrapSocket {
     this.socket = io(this.urlHelper.socketUrl, {
       forceNew: true,
       transports: ["websocket"], // babili-pusher does not support long HTTP polling
-      query: {
+      auth: {
         token: token
       }
     });
