@@ -2,7 +2,7 @@
 
 ## 19.0.3 [2025-06-02]
 
-* Vulnerability: Use Socket's `auth` to transfer the initial token instead of the query parameters during the handshake step.
+* Vulnerability: The WebSocket handshare transfers the token as a query parameter. Use the payload instead.
 
 ## 19.0.2 [2025-02-26]
 
