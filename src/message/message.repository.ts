@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { map, take } from "rxjs/operators";
 import { UrlHelper } from "../helper/url.helper";
@@ -15,8 +15,8 @@ export class NewMessage {
 @Injectable()
 export class MessageRepository {
 
-  constructor(private http: HttpClient,
-              private urlHelper: UrlHelper) {}
+  private http = inject(HttpClient);
+  private urlHelper = inject(UrlHelper);
 
   create(room: Room, attributes: NewMessage): Observable<Message> {
     return this.http.post(this.messageUrl(room.id!), {

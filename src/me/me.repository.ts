@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { EMPTY, Observable } from "rxjs";
 import { catchError, map, take } from "rxjs/operators";
 import { UrlHelper } from "../helper/url.helper";
@@ -9,9 +9,9 @@ import { Me } from "./me.types";
 @Injectable()
 export class MeRepository {
 
-  constructor(private http: HttpClient,
-              private roomRepository: RoomRepository,
-              private urlHelper: UrlHelper) {}
+  private http = inject(HttpClient);
+  private roomRepository = inject(RoomRepository);
+  private urlHelper = inject(UrlHelper);
 
   findMe(): Observable<Me> {
     return this.http.get(this.userUrl).pipe(take(1), map(me => Me.build(me, this.roomRepository)));

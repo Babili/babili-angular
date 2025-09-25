@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { UrlHelper } from "../helper/url.helper";
@@ -9,8 +9,8 @@ import { NotAuthorizedError } from "./not-authorized-error";
 @Injectable()
 export class HttpAuthenticationInterceptor implements HttpInterceptor {
 
-  constructor(private urlHelper: UrlHelper,
-              private tokenConfiguration: TokenConfiguration) {}
+  private urlHelper = inject(UrlHelper);
+  private tokenConfiguration = inject(TokenConfiguration);
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.shouldAddHeaderTo(request)) {

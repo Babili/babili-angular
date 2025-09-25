@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { Observable, timer } from "rxjs";
 import { map, shareReplay, take, takeWhile } from "rxjs/operators";
 import { UrlHelper } from "../helper/url.helper";
@@ -10,14 +10,15 @@ import { Me } from "./me.types";
 
 @Injectable()
 export class MeService {
+  private meRepository = inject(MeRepository);
+  private socketClient = inject(BootstrapSocket);
+  private urlHelper = inject(UrlHelper);
+  private tokenConfiguration = inject(TokenConfiguration);
 
   private cachedMe: Observable<Me> | undefined;
   private alive: boolean;
 
-  constructor(private meRepository: MeRepository,
-              private socketClient: BootstrapSocket,
-              private urlHelper: UrlHelper,
-              private tokenConfiguration: TokenConfiguration) {
+  constructor() {
     this.alive = false;
   }
 

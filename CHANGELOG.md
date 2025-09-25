@@ -1,5 +1,9 @@
 # Changelog
 
+## 20.0.0 [2025-09-25]
+
+* Support for Angular 20
+
 ## 19.0.3 [2025-06-02]
 
 * Vulnerability: The WebSocket handshare transfers the token as a query parameter. Use the payload instead.

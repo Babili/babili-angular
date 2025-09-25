@@ -1,13 +1,13 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { io, Socket } from "socket.io-client";
 import { UrlHelper } from "../helper/url.helper";
 
 @Injectable()
 export class BootstrapSocket {
+  private urlHelper = inject(UrlHelper);
 
   private socket: Socket;
 
-  constructor(private urlHelper: UrlHelper) {}
 
   connect(token: string): Socket {
     this.socket = io(this.urlHelper.socketUrl, {

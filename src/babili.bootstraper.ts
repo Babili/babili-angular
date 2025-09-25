@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { BabiliUrlConfiguration } from "./configuration/url-configuration.types";
 import { UrlHelper } from "./helper/url.helper";
 
 @Injectable()
 export class BabiliBootstraper {
 
-  constructor(private urlHelper: UrlHelper) {}
+  private urlHelper = inject(UrlHelper);
 
   init(apiUrl: string, socketUrl: string, aliveIntervalInMs?: number) {
     const configuration: BabiliUrlConfiguration = {
