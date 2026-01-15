@@ -7,6 +7,7 @@ import { Message } from "./../message/message.types";
 import { BootstrapSocket } from "./../socket/bootstrap.socket";
 import { MeRepository } from "./me.repository";
 import { Me } from "./me.types";
+import { NotAuthorizedError } from "../authentication/not-authorized-error";
 
 @Injectable()
 export class MeService {
@@ -30,12 +31,11 @@ export class MeService {
 
   me(): Observable<Me> {
     if (!this.cachedMe) {
-      this.cachedMe = this.meRepository
-                          .findMe()
-                          .pipe(
-                            map(me => this.scheduleAliveness(me)),
-                            shareReplay(1)
-                          );
+      this.cachedMe = this.meRepository.findMe()
+        .pipe(
+          map(me => this.scheduleAliveness(me)),
+          shareReplay(1)
+        );
     }
     return this.cachedMe.pipe(map(me => this.connectSocket(me)));
   }
@@ -48,16 +48,23 @@ export class MeService {
 
   private scheduleAliveness(me: Me): Me {
     this.alive = true;
-    timer(0, this.urlHelper.aliveIntervalInMs).pipe(
-      takeWhile(() => this.alive),
-    )
-    .subscribe(() => this.meRepository.updateAliveness().subscribe());
+    timer(0, this.urlHelper.aliveIntervalInMs)
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(() => this.meRepository.updateAliveness().subscribe());
     return me;
   }
 
   private connectSocket(me: Me): Me {
     if (!this.socketClient.socketExists()) {
       const socket = this.socketClient.connect(this.tokenConfiguration.apiToken);
+      socket.on("connect_error", (error: Error) => {
+        if (socket.active) {
+          console.warn("Temporary socket connection failure, will try to reconnect...", error);
+        } else {
+          console.error("Socket connection error", error);
+          throw new NotAuthorizedError(error);
+        }
+      });
       socket.on("message", data => {
         console.log("MESSAGE RECEIVED", data);
       });
