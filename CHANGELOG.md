@@ -1,5 +1,10 @@
 # Changelog
 
+## 20.0.5 [2026-01-15]
+
+* Upgrade dependencies 
+* Handle websocket connection errors  
+
 ## 20.0.0 [2025-09-25]
 
 * Support for Angular 20
