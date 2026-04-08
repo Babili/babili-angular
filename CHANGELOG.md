@@ -1,5 +1,10 @@
 # Changelog
 
+## 21.0.0 [2026-04-08]
+
+* Support for Angular 21
+* Fix tsconfig: align `lib` and `module` with `target` (es2022), use `bundler` module resolution
+
 ## 20.0.5 [2026-01-15]
 
 * Upgrade dependencies 
