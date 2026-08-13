@@ -4,6 +4,7 @@
 
 * Remove deprecated `@angular-devkit/build-angular`
 * Upgrade dev dependencies
+* Releases are published to npm automatically by `.github/workflows/release.yml`. Publishing uses npm's [trusted publishing](https://docs.npmjs.com/trusted-publishers) via GitHub Actions OIDC.
 
 ## 21.0.0 [2026-04-08]
 
