@@ -1,12 +1,13 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    // TypeScript 6 defaults "strict" to true when unset; keep it off to match the codebase.
+    "strict": false,
     "outDir": "./dist/out-tsc",
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": "./src",
     "sourceMap": true,
     "inlineSourceMap": false,
     "inlineSources": true,

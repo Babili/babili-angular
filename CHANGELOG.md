@@ -1,5 +1,12 @@
 # Changelog
 
+## 22.0.0 [2026-08-13]
+
+* Support for Angular 22
+* Upgrade to TypeScript 6.0, required by Angular 22; keep `strict` off to match the codebase
+* Migrate `eslint.config.js` to the `angular-eslint`/`typescript-eslint` flat-config packages, required by `@angular-eslint` 22
+* Remove unused `baseUrl` from `tsconfig.json` (deprecated in TypeScript 6, removed in 7)
+
 ## 21.0.1 [2026-08-13]
 
 * Remove deprecated `@angular-devkit/build-angular`

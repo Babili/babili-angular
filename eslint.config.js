@@ -1,19 +1,8 @@
-import typescriptEslint from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import eslint from "@eslint/js";
+import tseslint from "typescript-eslint";
+import angular from "angular-eslint";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
-});
-
-export default [{
+export default tseslint.config({
     ignores: [
         "projects/**/*",
         "dist/**/*",
@@ -23,21 +12,14 @@ export default [{
         "**/node_modules",
         "**/dist",
     ],
-}, ...compat.extends(
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@angular-eslint/recommended",
-    "plugin:@angular-eslint/template/process-inline-templates",
-), {
-    plugins: {
-        "@typescript-eslint": typescriptEslint,
-    },
-
-    languageOptions: {
-        parser: tsParser,
-    },
-
+}, {
+    files: ["**/*.ts"],
+    extends: [
+        eslint.configs.recommended,
+        ...tseslint.configs.recommended,
+        ...angular.configs.tsRecommended,
+    ],
+    processor: angular.processInlineTemplates,
     rules: {
         quotes: ["error", "double"],
         semi: ["error"],
@@ -53,4 +35,4 @@ export default [{
             caughtErrorsIgnorePattern: "^_",
         }],
     },
-}];
+});
