@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+
+* Remove deprecated `@angular-devkit/build-angular`
+* Upgrade dev dependencies
+
 ## 21.0.0 [2026-04-08]
 
 * Support for Angular 21
