@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+
+* Upgrade dev dependencies
+* Build with Node 26
+
 ## 22.0.0 [2026-08-13]
 
 * Support for Angular 22
