@@ -1,6 +1,6 @@
 {
   "name": "@babili.io/angular",
-  "version": "22.0.0",
+  "version": "22.0.1",
   "type": "module",
   "description": "Types and services to create an Angular Babili client",
   "scripts": {

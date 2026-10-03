@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased]
+## 22.0.1 [2026-09-03]
 
-* Upgrade dev dependencies
+* Upgrade dev dependencies: Angular 22.2, ng-packagr 22.2, ESLint 10, angular-eslint 22.5, typescript-eslint 8.71, socket.io-client 4.8.4, dayjs 1.11.23
 * Build with Node 26
 
 ## 22.0.0 [2026-08-13]
